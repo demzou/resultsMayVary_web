@@ -1,0 +1,6 @@
+# Canonical HTTPS/non-WWW
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTPS} off [OR]
+	RewriteCond %{HTTP_HOST} ^www\.resultsmayvary\.live [NC]
+	RewriteRule (.*) https://resultsmayvary.live/$1 [L,R=301]
+</IfModule>
