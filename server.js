@@ -7,7 +7,7 @@ const sslRedirect = require('heroku-ssl-redirect');
 const express = require('express');
 const bodyParser = require('body-parser');
 const R = require('ramda');
-const secure = require('ssl-express-www');
+//const secure = require('ssl-express-www');
 
 
 /*
@@ -15,14 +15,15 @@ const secure = require('ssl-express-www');
  */
 const app = express();
 const port = process.env.PORT || 8080;
-app.use(secure);
 
-app.use(require('express-naked-redirect')({
-  subDomain: 'www',
-  https: true
-}))
+// app.use(secure);
 
-app.use(sslRedirect());
+// app.use(require('express-naked-redirect')({
+//   subDomain: 'www',
+//   https: true
+// }))
+
+// app.use(sslRedirect());
 
 
 // enable ssl redirect
