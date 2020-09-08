@@ -3,17 +3,37 @@
 /*
  * Dependencies
  */
+const sslRedirect = require('heroku-ssl-redirect');
 const express = require('express');
 const bodyParser = require('body-parser');
 const R = require('ramda');
 const secure = require('ssl-express-www');
+
 
 /*
  * Config
  */
 const app = express();
 const port = process.env.PORT || 8080;
+<<<<<<< HEAD
 app.use(secure);
+=======
+<<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
+app.use(require('express-naked-redirect')({
+  subDomain: 'www',
+  https: true
+}))
+=======
+app.use(sslRedirect());
+>>>>>>> node-heroku-ssl
+=======
+
+// enable ssl redirect
+app.use(sslRedirect());
+
+>>>>>>> updated order of added code
+>>>>>>> node-heroku-ssl-redirect
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 app.set('views', `${__dirname}/views`);
