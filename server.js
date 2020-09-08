@@ -6,14 +6,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const R = require('ramda');
-const secure = require('ssl-express-www');
+const enforce = require('express-sslify');
 
 /*
  * Config
  */
 const app = express();
 const port = process.env.PORT || 8080;
-app.use(secure);
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 app.set('views', `${__dirname}/views`);
