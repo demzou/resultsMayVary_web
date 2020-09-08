@@ -6,6 +6,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const R = require('ramda');
+const secure = require('ssl-express-www');
 
 /*
  * Config
@@ -16,6 +17,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
+app.use(secure);
 
 /** Services */
 const opentok = require('./services/opentok-api');
