@@ -11,11 +11,8 @@
     "body-parser": "^1.15.1",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
-<<<<<<< refs/remotes/origin/master
     "express-naked-redirect": "^0.1.9",
-=======
     "heroku-ssl-redirect": "^0.1.1",
->>>>>>> node-heroku-ssl
     "jsonwebtoken": "^7.2.1",
     "opentok": "^2.3.2",
     "ramda": "^0.21.0",
