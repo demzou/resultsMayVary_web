@@ -11,11 +11,14 @@
     "body-parser": "^1.15.1",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
+    "express-naked-redirect": "^0.1.9",
+    "heroku-ssl-redirect": "^0.1.1",
     "jsonwebtoken": "^7.2.1",
     "opentok": "^2.3.2",
     "ramda": "^0.21.0",
     "request": "^2.72.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "ssl-express-www": "^3.0.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
