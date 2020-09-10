@@ -26,7 +26,15 @@ const broadcast = require('./services/broadcast-api');
  */
 
 app.get('/', (req, res) => {
-  res.redirect('/viewer');
+  res.redirect('/splash');
+});
+
+app.get('/splash', (req, res) => {
+  res.render('pages/splash');
+});
+
+app.get('/mobile', (req, res) => {
+  res.render('pages/mobile');
 });
 
 app.get('/viewer', (req, res) => {
@@ -54,7 +62,7 @@ app.get('/broadcast', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.redirect('/viewer');
+  res.redirect('/splash');
 });
 
 /*
@@ -112,6 +120,7 @@ const addClient = (clientId) => {
   console.log("client added, total: " + clientList.length);
 }
 
+let mode;
 
 // Register a callback function to run when we have an individual connection
 // This is run for each individual client that connects
@@ -122,6 +131,7 @@ io.sockets.on('connection',
     console.log("We have a new client: " + socket.id);
     addClient(socket.id);
     socket.broadcast.emit('numClients', clientList.length);
+    io.to(socket.id).emit('mode', mode);
 
     //Max handshake
     socket.on('clientname',
@@ -152,6 +162,7 @@ io.sockets.on('connection',
     socket.on('mode',
     function(data) {
         //do something when data is received
+        mode = data;
         console.log("mode :" + data);
         socket.broadcast.emit('mode', data);
       }

@@ -15,6 +15,8 @@ let shapes = [];
 let startTime;
 let audienceClick = [] ;
 
+let soundOn = false;
+
 // Mode 1 --> Intro
 let question1 = "Pick the top 3 emotions you've been feeling during the lockdown";
 let options1 = ['Focused', 'Unmotivated', 'Lonely', 'Stressed', 'In limbo', 'Depressed', 'Thankful', 'Lucky'];
@@ -32,7 +34,7 @@ let question7 = 'Select all the statements that apply to you';
 let options7 = ['I work for a supportive company', 'I have enough wealth/savings', 'I have maintained my job', 'My visa situation is secured', "I've felt lucky", 'New opportunities appeared', 'I feel safe but trapped in my job'];
 
 // Mode 8 --> Input WORK Stressful
-let question8 = "Give an example of something you have written in an email or an online chat";
+let question8 = "Give an example of something you have written at work, in an email or an online chat, during the lockdown";
 let input8;
 
 // Mode 9 --> Vote TIME
@@ -101,6 +103,7 @@ let resultSent = false;
 let keepPressing = false;
 let statementClicked = false;
 
+
 function preload() {
     futuraBold = loadFont('assets/Futura-CondensedExtraBold-05.ttf');
     futuraBook = loadFont('assets/futura_book.otf');
@@ -123,6 +126,8 @@ function setup() {
     cnv = createCanvas(cnvW, cnvH);
     centerCanvas();
     cnv.parent('sketch-container');
+
+    getAudioContext().suspend();
 
     //Variables
     optionsBgCol = [color(0), color(0)];
@@ -648,6 +653,8 @@ function buttonStatement(_question, _statement) {
 
 }
 
+
+
 //--------------------------------------------------------------------
 function drawAudience() {
 
@@ -686,6 +693,7 @@ function windowResized() {
 
 //--------------------------------------------------------------------
 function mousePressed() {
+    userStartAudio();
 //     mouseIsClicked = true;
 //     console.log('click');
    }
