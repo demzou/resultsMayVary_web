@@ -3,7 +3,7 @@ let socket;
 const serverURL = 'https://resultsmayvary.herokuapp.com/';
 //const serverURL = 'localhost:8080';
 
-let mode = 0;
+let mode = 1000;
 let fontSize20;
 let fontSize24;
 let fontSize45;
@@ -25,6 +25,7 @@ function setup() {
     cnv = createCanvas(windowWidth, windowHeight);
     centerCanvas();
 
+    fontSize14 = 14 * height / 700;
     fontSize20 = 20 * height / 700;
     fontSize24 = 24 * height / 700;
     fontSize45 = 45 * height / 700;
@@ -33,7 +34,7 @@ function setup() {
     socket = io.connect(serverURL);
 
     socket.on('mode', function(data) {
-    /////////// Do something here if pre-pre show
+        mode = data;
     });
 
 }
@@ -49,15 +50,35 @@ function draw() {
     textSize(fontSize45);
     text("RESULTS MAY VARY", 20, height/8, width-20, height/4);
 
-    textAlign(CENTER, CENTER);
-    fill(color(255));
-    textFont(futuraBold);
-    textSize(fontSize24);
-    text("Where are you joining the performance from?", 20, height/3, width-20, height/4);
+    if (mode == 1000) {
 
-    button("From home, on a computer", height/2+height/10, "/viewer");
-    button("From Goldsmiths, on a mobile phone", height/2+30+2*height/10, "/mobile");
+        textAlign(CENTER, CENTER);
+        fill(color(255));
+        textFont(futuraBook);
+        textSize(fontSize24);
+        text("Performances:\n THU 17 SEPT: 21.00\n FRI 18 SEPT: 18:05\n SAT 19 SEPT: 12.55 & 20.50\n SUN 20 SEPT: 11.05", 20, height/3, width-20, height/4);
+        
+        button("MORE INFO", height/4*3, "https://resultsmayvary.eventbrite.co.uk");
+
+        textAlign(CENTER, TOP);
+        fill(color(0, 255, 255));
+        textFont(futuraBook);
+        textSize(fontSize14);
+        text("If your performance is due to start soon, please stay on this page, it will automatically refresh when we are ready to start", 20, height/4*3 + height/10+ 40, width-20, height/4);
+        
+
+    } else {
+
+        textAlign(CENTER, CENTER);
+        fill(color(255));
+        textFont(futuraBold);
+        textSize(fontSize24);
+        text("Where are you joining the performance from?", 20, height/3, width-20, height/4);
+
+        button("From home, on a computer", height/2+height/10, "/viewer");
+        button("From Goldsmiths, on a mobile phone", height/2+30+2*height/10, "/mobile");
     
+    }
 }
 
 //--------------------------------------------------------------------

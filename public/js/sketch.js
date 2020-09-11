@@ -15,9 +15,11 @@ let shapes = [];
 let startTime;
 let audienceClick = [] ;
 
+let fontSize14;
 let fontSize18;
 let fontSize20;
 let fontSize24;
+let fontSize45;
 
 // Mode 1 --> Intro
 let question1 = "Pick the top 3 emotions you've been feeling during the lockdown";
@@ -137,9 +139,11 @@ function setup() {
     questionCol = color(255);
     choiceMade = false;
 
+    fontSize14 = 14 * cnvW / 400;
     fontSize18 = 18 * cnvW / 400;
     fontSize20 = 20 * cnvW / 400;
     fontSize24 = 24 * cnvW / 400;
+    fontSize45 = 45 * cnvW / 400;
 
     //Input
     input8 = createInput();
@@ -242,7 +246,35 @@ function draw() {
     //pop();
 
    // push();
+
+   if (mode == 49 || mode ==50) {
+
+    textAlign(CENTER, CENTER);
+        fill(color(255));
+        textFont(futuraBold);
+        textSize(fontSize24);
+        text("The performance will start shortly", 20, height/3, width-40, height/4);
+
+        textAlign(CENTER, CENTER);
+        fill(color(0, 255, 255));
+        textFont(futuraBook);
+        textSize(fontSize14);
+        text("Please stay on this page, it will automatically refresh when we are ready to start", 40, height/3+120, width-80, height/4);
+        
+
+   }
+
     if (mode==1) drawList(question1, options1, 3, 3);
+
+   if (mode==100) {
+    textAlign(CENTER, CENTER);
+    fill(color(255));
+    textFont(futuraBook);
+    textSize(fontSize20);
+    text("Take a deep breath.\n\n Think about where you were when the lockdown started.\n\n And how you've felt since.", 40, height/4, width-80, height/2);
+    
+   }
+
     if (mode==2) drawChoice(question2, options2);
     if (mode==5) drawList(question5, options5, 1, options5.length+1);
     if (mode==7) drawList(question7, options7, 1, options7.length+1);
