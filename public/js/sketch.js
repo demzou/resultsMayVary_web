@@ -131,7 +131,7 @@ function setup() {
     centerCanvas();
     cnv.parent('sketch-container');
 
-    getAudioContext().suspend();
+    //getAudioContext().suspend();
 
     //Variables
     optionsBgCol = [color(0), color(0)];
@@ -734,7 +734,7 @@ function windowResized() {
 
 //--------------------------------------------------------------------
 function mousePressed() {
-    userStartAudio();
+    //userStartAudio();
 //     mouseIsClicked = true;
 //     console.log('click');
    }
