@@ -26,11 +26,11 @@ const broadcast = require('./services/broadcast-api');
  */
 
 app.get('/', (req, res) => {
-  res.redirect('/splash');
+  res.redirect('/welcome');
 });
 
-app.get('/splash', (req, res) => {
-  res.render('pages/splash');
+app.get('/welcome', (req, res) => {
+  res.render('pages/welcome');
 });
 
 app.get('/mobile', (req, res) => {
@@ -62,7 +62,7 @@ app.get('/broadcast', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.redirect('/splash');
+  res.redirect('/welcome');
 });
 
 /*

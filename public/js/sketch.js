@@ -15,7 +15,9 @@ let shapes = [];
 let startTime;
 let audienceClick = [] ;
 
-let soundOn = false;
+let fontSize18;
+let fontSize20;
+let fontSize24;
 
 // Mode 1 --> Intro
 let question1 = "Pick the top 3 emotions you've been feeling during the lockdown";
@@ -135,6 +137,10 @@ function setup() {
     questionCol = color(255);
     choiceMade = false;
 
+    fontSize18 = 18 * cnvW / 400;
+    fontSize20 = 20 * cnvW / 400;
+    fontSize24 = 24 * cnvW / 400;
+
     //Input
     input8 = createInput();
     input8.position(cnvX+20, cnvH/2);
@@ -142,7 +148,7 @@ function setup() {
     input8.value(' ');
     input8.style('background-color', '#111111');
     input8.style('font-family', 'futura');
-    input8.style('font-size', '16px');
+    input8.style('font-size', fontSize18 + 'px');
     input8.style('color', 'white');
     input8.style('border-color', 'white');
     input8.style('display', 'none');
@@ -153,7 +159,7 @@ function setup() {
     input27.value(' ');
     input27.style('background-color', '#111111');
     input27.style('font-family', 'futura');
-    input27.style('font-size', '16px');
+    input27.style('font-size', fontSize18 + 'px');
     input27.style('color', 'white');
     input27.style('border-color', 'white');
     input27.style('display', 'none');
@@ -164,7 +170,7 @@ function setup() {
     input36.value(' ');
     input36.style('background-color', '#111111');
     input36.style('font-family', 'futura');
-    input36.style('font-size', '16px');
+    input36.style('font-size', fontSize18 + 'px');
     input36.style('color', 'white');
     input36.style('border-color', 'white');
     input36.style('display', 'none');
@@ -287,7 +293,7 @@ function drawChoice(_question, _options) {
     //Question
     fill(questionCol);
     textFont(futuraBold);
-    textSize(24);
+    textSize(fontSize24);
     text(_question, 20, height/4, width-20, height/4);
 
     //Buttons
@@ -348,7 +354,7 @@ function buttonSquare(_options, _optionNum) {
     rect(startX, startY, buttonWidth, buttonHeight);
 
     textFont(futuraBook);
-    textSize(24);
+    textSize(fontSize24);
     fill(optionsCol[_optionNum]);
     text(_options[_optionNum], startX, 2.25*buttonHeight, buttonWidth, buttonHeight/2);
     pop();
@@ -388,7 +394,7 @@ function drawList(_question, _options, _min, _max) {
     //Question
     fill(questionCol);
     textFont(futuraBold);
-    textSize(24);
+    textSize(fontSize24);
     text(_question, 20, 20, width-20, height/4);
 
     //Buttons
@@ -452,7 +458,7 @@ function buttonList(_options, _optionNum) {
     rect(startX, startY, buttonWidth, buttonHeight);
 
     textFont(futuraBook);
-    textSize(18);
+    textSize(fontSize18);
     fill(optionsCol[_optionNum]);
     text(_options[_optionNum], startX, startY+buttonHeight/4, buttonWidth, buttonHeight/2);
     pop();
@@ -476,7 +482,7 @@ function drawInput(_question, _input) {
     //Question
     fill(questionCol);
     textFont(futuraBold);
-    textSize(24);
+    textSize(fontSize24);
     text(_question, 20, height/6, width-20, height/4);
 
     //Input
@@ -570,10 +576,13 @@ function submitButton(_type, _optionsOrInput) {
     //Draw button
     push();
     stroke(buttonMainCol);
+    strokeWeight(3);
     fill(buttonBgCol)
     rect(startX, startY, buttonWidth, buttonHeight);
+    pop();
+    push();
     textFont(futuraBook);
-    textSize(20);
+    textSize(fontSize20);
     fill(buttonMainCol);
     text('SEND', startX, startY+buttonHeight/4, buttonWidth, buttonHeight/2);
     pop();
@@ -588,7 +597,7 @@ function buttonStatement(_question, _statement) {
         questionCol = color(255);
     }
 
-    let buttonSize = width-60;
+    let buttonSize = height/2-60;
     let centreX = width/2;
     let centreY = height/5*3;
     let isHovered = false;
@@ -634,18 +643,18 @@ function buttonStatement(_question, _statement) {
     //Question
     fill(questionCol);
     textFont(futuraBold);
-    textSize(24);
+    textSize(fontSize24);
     text(_question, 20, height/6, width-20, height/4);
 
     //Draw button 
     push(); 
     fill(circleBgCol);
     stroke(circleBorderCol);
-    strokeWeight(2);
+    strokeWeight(3);
     circle(centreX, centreY, buttonSize);
 
     textFont(futuraBook);
-    textSize(20);
+    textSize(fontSize20);
     fill(statementCol);
     noStroke();
     text(_statement[statementCount], centreX-buttonSize/2+10, centreY-buttonSize/2, buttonSize-20, buttonSize);

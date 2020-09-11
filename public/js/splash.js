@@ -1,9 +1,12 @@
 let cnv;
 let socket;
-//const serverURL = 'https://resultsmayvary.herokuapp.com/';
-const serverURL = 'localhost:8080';
+const serverURL = 'https://resultsmayvary.herokuapp.com/';
+//const serverURL = 'localhost:8080';
 
 let mode = 0;
+let fontSize20;
+let fontSize24;
+let fontSize45;
 
 function preload() {
     futuraBold = loadFont('assets/Futura-CondensedExtraBold-05.ttf');
@@ -22,12 +25,16 @@ function setup() {
     cnv = createCanvas(windowWidth, windowHeight);
     centerCanvas();
 
-        //Socket.io
-        socket = io.connect(serverURL);
+    fontSize20 = 20 * height / 700;
+    fontSize24 = 24 * height / 700;
+    fontSize45 = 45 * height / 700;
 
-        socket.on('mode', function(data) {
-        /////////// Do something here if pre-pre show
-        });
+    //Socket.io
+    socket = io.connect(serverURL);
+
+    socket.on('mode', function(data) {
+    /////////// Do something here if pre-pre show
+    });
 
 }
 
@@ -39,17 +46,17 @@ function draw() {
     textAlign(CENTER, CENTER);
     fill(color(0, 255, 255));
     textFont(futuraBold);
-    textSize(50);
+    textSize(fontSize45);
     text("RESULTS MAY VARY", 20, height/8, width-20, height/4);
 
     textAlign(CENTER, CENTER);
     fill(color(255));
     textFont(futuraBold);
-    textSize(24);
+    textSize(fontSize24);
     text("Where are you joining the performance from?", 20, height/3, width-20, height/4);
 
     button("From home, on a computer", height/2+height/10, "/viewer");
-    button("From Goldsmiths, on a mobile phone", height/2+20+2*height/10, "/mobile");
+    button("From Goldsmiths, on a mobile phone", height/2+30+2*height/10, "/mobile");
     
 }
 
@@ -57,9 +64,14 @@ function draw() {
 
 function button(_buttonText, _locY, _URL) {
 
-    let buttonWidth = width-40;
+    let buttonWidth;
+    if (width > 1000) {
+        buttonWidth = 600;
+    } else {
+        buttonWidth = width-40;
+    }
     let buttonHeight = height/10;
-    let startX = 20;
+    let startX = (width-buttonWidth)/2;
     let startY = _locY;
 
     let buttonBgCol = color(0);
@@ -91,7 +103,7 @@ function button(_buttonText, _locY, _URL) {
     fill(buttonBgCol)
     rect(startX, startY, buttonWidth, buttonHeight);
     textFont(futuraBook);
-    textSize(20);
+    textSize(fontSize20);
     fill(buttonMainCol);
     text(_buttonText, startX, startY+buttonHeight/4, buttonWidth, buttonHeight/2);
     pop();
