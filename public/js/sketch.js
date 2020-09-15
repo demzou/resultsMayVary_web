@@ -726,8 +726,8 @@ function drawAudience() {
 //--------------------------------------------------------------------
 function windowResized() {
     el = document.getElementById("sketch-container");
-    w = el.getBoundingClientRect().width;
-    h = el.getBoundingClientRect().height;
+    cnvW = el.getBoundingClientRect().width;
+    cnvH = el.getBoundingClientRect().height;
     centerCanvas();
   }
 
