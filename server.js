@@ -281,7 +281,6 @@ io.sockets.on('connection',
     }
   );
 
-
     
     // Specify a callback function to run when the client disconnects
     socket.on('disconnect',
