@@ -114,26 +114,37 @@ function preload() {
 }
   
 function centerCanvas() {
-    // let x = (w - width) / 2;
-    // let y = (h - height) / 2;
-    cnvX = el.getBoundingClientRect().x;
-    cnvY = el.getBoundingClientRect().y;
-    cnv.position(cnvX, cnvY);
+    let x = (windowWidth - width) / 2;
+    let y = (windowHeight - height) / 2;
+    cnv.position(x, y);
+    // // let x = (w - width) / 2;
+    // // let y = (h - height) / 2;
+    // cnvX = el.getBoundingClientRect().x;
+    // cnvY = el.getBoundingClientRect().y;
+    // cnv.position(cnvX, cnvY);
 }
 
 //--------------------------------------------------------------------
 function setup() {
-    el = document.getElementById("sketch-container");
-    cnvW = el.getBoundingClientRect().width;
-    cnvH = el.getBoundingClientRect().height;
-    //createCanvas(cnvW, cnvH);
-    cnv = createCanvas(cnvW, cnvH);
-    centerCanvas();
-    cnv.parent('sketch-container');
 
-    console.log(cnvW);
+    createCanvas(windowWidth, windowHeight);
+    cnv = createCanvas(windowWidth, windowHeight);
+    centerCanvas();
+
+    // el = document.getElementById("sketch-container");
+    // cnvW = el.getBoundingClientRect().width;
+    // cnvH = el.getBoundingClientRect().height;
+    // createCanvas(cnvW, cnvH);
+    // cnv = createCanvas(cnvW, cnvH);
+    // centerCanvas();
+    // cnv.parent('sketch-container');
+
+    // console.log(cnvW);
 
     //getAudioContext().suspend();
+
+    cnvW = width;
+    cnvH = height;
 
     //Variables
     optionsBgCol = [color(0), color(0)];
@@ -727,9 +738,9 @@ function drawAudience() {
 
 //--------------------------------------------------------------------
 function windowResized() {
-    el = document.getElementById("sketch-container");
-    cnvW = el.getBoundingClientRect().width;
-    cnvH = el.getBoundingClientRect().height;
+    // el = document.getElementById("sketch-container");
+    // cnvW = el.getBoundingClientRect().width;
+    // cnvH = el.getBoundingClientRect().height;
     centerCanvas();
   }
 
