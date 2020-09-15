@@ -116,13 +116,13 @@ function preload() {
 function centerCanvas() {
 
     if (el.getBoundingClientRect().width > 400) {
-        cnvX = el.getBoundingClientRect().x;
-        cnvY = el.getBoundingClientRect().y;
-        cnv.position(cnvX, cnvY);
-    } else {
         let x = (windowWidth - width) / 2;
         let y = (windowHeight - height) / 2;
         cnv.position(x, y);
+    } else {
+        cnvX = el.getBoundingClientRect().x;
+        cnvY = el.getBoundingClientRect().y;
+        cnv.position(cnvX, cnvY);
     }
 
 }
@@ -137,18 +137,18 @@ function setup() {
     el = document.getElementById("sketch-container");
 
     if (el.getBoundingClientRect().width > 400) {
+        createCanvas(windowWidth, windowHeight);
+        cnv = createCanvas(windowWidth, windowHeight);
+        centerCanvas();
+        cnvW = width;
+        cnvH = height;
+    } else {
         cnvW = el.getBoundingClientRect().width;
         cnvH = el.getBoundingClientRect().height;
         createCanvas(cnvW, cnvH);
         cnv = createCanvas(cnvW, cnvH);
         centerCanvas();
         cnv.parent('sketch-container');
-    } else {
-        createCanvas(windowWidth, windowHeight);
-        cnv = createCanvas(windowWidth, windowHeight);
-        centerCanvas();
-        cnvW = width;
-        cnvH = height;
     }
 
     //getAudioContext().suspend();
@@ -748,11 +748,13 @@ function windowResized() {
     el = document.getElementById("sketch-container");
     
     if (el.getBoundingClientRect().width > 400) {   
+        centerCanvas();
+    } else {
         cnvW = el.getBoundingClientRect().width;
         cnvH = el.getBoundingClientRect().height;
+        centerCanvas();
     }
-    
-    centerCanvas();
+
   }
 
 
