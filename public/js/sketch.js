@@ -114,37 +114,44 @@ function preload() {
 }
   
 function centerCanvas() {
-    let x = (windowWidth - width) / 2;
-    let y = (windowHeight - height) / 2;
-    cnv.position(x, y);
-    // // let x = (w - width) / 2;
-    // // let y = (h - height) / 2;
-    // cnvX = el.getBoundingClientRect().x;
-    // cnvY = el.getBoundingClientRect().y;
-    // cnv.position(cnvX, cnvY);
+
+    if (el.getBoundingClientRect().width > 400) {
+        cnvX = el.getBoundingClientRect().x;
+        cnvY = el.getBoundingClientRect().y;
+        cnv.position(cnvX, cnvY);
+    } else {
+        let x = (windowWidth - width) / 2;
+        let y = (windowHeight - height) / 2;
+        cnv.position(x, y);
+    }
+
 }
 
 //--------------------------------------------------------------------
 function setup() {
 
-    createCanvas(windowWidth, windowHeight);
-    cnv = createCanvas(windowWidth, windowHeight);
-    centerCanvas();
-
-    // el = document.getElementById("sketch-container");
-    // cnvW = el.getBoundingClientRect().width;
-    // cnvH = el.getBoundingClientRect().height;
-    // createCanvas(cnvW, cnvH);
-    // cnv = createCanvas(cnvW, cnvH);
+    // createCanvas(windowWidth, windowHeight);
+    // cnv = createCanvas(windowWidth, windowHeight);
     // centerCanvas();
-    // cnv.parent('sketch-container');
 
-    // console.log(cnvW);
+    el = document.getElementById("sketch-container");
+
+    if (el.getBoundingClientRect().width > 400) {
+        cnvW = el.getBoundingClientRect().width;
+        cnvH = el.getBoundingClientRect().height;
+        createCanvas(cnvW, cnvH);
+        cnv = createCanvas(cnvW, cnvH);
+        centerCanvas();
+        cnv.parent('sketch-container');
+    } else {
+        createCanvas(windowWidth, windowHeight);
+        cnv = createCanvas(windowWidth, windowHeight);
+        centerCanvas();
+        cnvW = width;
+        cnvH = height;
+    }
 
     //getAudioContext().suspend();
-
-    cnvW = width;
-    cnvH = height;
 
     //Variables
     optionsBgCol = [color(0), color(0)];
@@ -738,9 +745,13 @@ function drawAudience() {
 
 //--------------------------------------------------------------------
 function windowResized() {
-    // el = document.getElementById("sketch-container");
-    // cnvW = el.getBoundingClientRect().width;
-    // cnvH = el.getBoundingClientRect().height;
+    el = document.getElementById("sketch-container");
+    
+    if (el.getBoundingClientRect().width > 400) {   
+        cnvW = el.getBoundingClientRect().width;
+        cnvH = el.getBoundingClientRect().height;
+    }
+    
     centerCanvas();
   }
 
