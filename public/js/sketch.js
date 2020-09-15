@@ -126,10 +126,12 @@ function setup() {
     el = document.getElementById("sketch-container");
     cnvW = el.getBoundingClientRect().width;
     cnvH = el.getBoundingClientRect().height;
-    createCanvas(cnvW, cnvH);
+    //createCanvas(cnvW, cnvH);
     cnv = createCanvas(cnvW, cnvH);
     centerCanvas();
     cnv.parent('sketch-container');
+
+    console.log(cnvW);
 
     //getAudioContext().suspend();
 
