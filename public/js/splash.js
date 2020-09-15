@@ -21,6 +21,7 @@ function centerCanvas() {
 
 //--------------------------------------------------------------------
 function setup() {
+
     createCanvas(windowWidth, windowHeight);
     cnv = createCanvas(windowWidth, windowHeight);
     centerCanvas();
