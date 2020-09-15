@@ -115,7 +115,7 @@ function preload() {
   
 function centerCanvas() {
 
-    if (el.getBoundingClientRect().width > 400) {
+    if (el.getBoundingClientRect().width > 500) {
         let x = (windowWidth - width) / 2;
         let y = (windowHeight - height) / 2;
         cnv.position(x, y);
@@ -136,7 +136,7 @@ function setup() {
 
     el = document.getElementById("sketch-container");
 
-    if (el.getBoundingClientRect().width > 400) {
+    if (el.getBoundingClientRect().width > 500) {
         createCanvas(windowWidth, windowHeight);
         cnv = createCanvas(windowWidth, windowHeight);
         centerCanvas();
@@ -747,7 +747,7 @@ function drawAudience() {
 function windowResized() {
     el = document.getElementById("sketch-container");
     
-    if (el.getBoundingClientRect().width > 400) {   
+    if (el.getBoundingClientRect().width > 500) {   
         centerCanvas();
     } else {
         cnvW = el.getBoundingClientRect().width;
