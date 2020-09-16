@@ -826,7 +826,7 @@ function socialLinks(_buttonText, _locY, _URL) {
                 if(mouseIsPressed) {    
                     buttonBgCol = color(0, 255, 255);
                     buttonMainCol = color(0);
-                    window.open(_URL, "_top");
+                    window.open(_URL, "_self");
                 } else {
                     buttonBgCol = color(255);
                     buttonMainCol = color(0);
