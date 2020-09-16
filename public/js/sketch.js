@@ -342,7 +342,7 @@ function draw() {
         }
     }
 
-    if(mode > 100 ) {
+    if(mode === 100 ) {
         textAlign(CENTER, TOP);
         fill(color(255));
         textFont(futuraBold);
