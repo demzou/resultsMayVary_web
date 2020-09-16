@@ -120,7 +120,7 @@ const addClient = (clientId) => {
   console.log("client added, total: " + clientList.length);
 }
 
-let mode;
+let mode = 1000;
 
 // Register a callback function to run when we have an individual connection
 // This is run for each individual client that connects
