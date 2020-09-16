@@ -10,9 +10,9 @@ const serverURL = 'https://resultsmayvary.herokuapp.com/';
 //const serverURL = 'localhost:8080';
 
 let mode = 0;
-let numPeople;
-let shapes = [];
-let startTime;
+let numPeople = 10;
+// let shapes = [];
+// let startTime;
 let audienceClick = [] ;
 
 let fontSize14;
@@ -20,6 +20,13 @@ let fontSize18;
 let fontSize20;
 let fontSize24;
 let fontSize45;
+
+let audienceIcon;
+let audienceIconSize;
+
+let time;
+let startTime;
+let duration = 10*1000;
 
 // Mode 1 --> Intro
 let question1 = "Pick the top 3 emotions you've been feeling during the lockdown";
@@ -59,7 +66,7 @@ let options15 = ['Lonely or anxious', 'Comfortable on my own or the people I liv
 
 // Mode 18 --> Statements LONELY
 let question18 = "Click on the statement if true";
-let statement18 = [" I am usually a very social person", "I miss serendipity",  "I miss physical contact", "I miss talking to people", "I am afraid to be forgotten", "I haven't had enough people around to interact"];
+let statement18 = ["I am usually a very social person", "I miss happy accidents and unplanned encounters",  "I miss physical contact", "I miss talking to people", "I am afraid to be forgotten", "I haven't had enough people around to interact"];
 
 // Mode 21 --> Vote SOCIAL CIRCLES
 let question21 = "How have your social circles been impacted?";
@@ -71,10 +78,10 @@ let options24 = ["Circles were fairly small to start with", "I cultivate few but
 
 // Mode 26 --> Statements SMALLER
 let question26 = "Click on the statement if true";
-let statement26 = ["I have had more meaningful interactions with the people I interacted with", "This made me realise who my real friends are",  "People have been closing on themselves", "I haven't interacted with some people at all", "This made me worried about the quality of my relationships", "My circles are related to activities that stopped"];
+let statement26 = ["I have had more meaningful interactions with the people I interacted with", "This made me realise who my real friends are",  "People have been focusing on themselves", "I haven't interacted with some people at all", "This made me worried about the quality of my relationships", "My circles are related to activities that stopped"];
 
 // Mode 27 --> Input SOCIAL CIRCLES Family
-let question27 = "Give an example of something you would like to send to a family member or a special person";
+let question27 = "Give an example of a message you would like to send to a family member or a special person";
 let input27;
 
 // Mode 28 --> Vote HEALTHY HABITS
@@ -83,7 +90,7 @@ let options28 = ["Same or healthier", "Getting worse"];
 
 // Mode 31 --> Statements HEALTHIER
 let question31 = "Click on the statement if true";
-let statement31 = ["I have have used this time to put new healthy habits in place", "I started a new physical activity", "I have been eating food carefully", "I made sure I was exercising regularly", "I have been meditating"];
+let statement31 = ["I have used this time to put new healthy habits in place", "I started a new physical activity", "I have been eating food carefully", "I made sure I was exercising regularly", "I have been meditating"];
 
 // Mode 33 --> Statements WORSE
 let question33 = "Click on the statement if true";
@@ -164,6 +171,7 @@ function setup() {
     fontSize20 = 20 * cnvW / 400;
     fontSize24 = 24 * cnvW / 400;
     fontSize45 = 45 * cnvW / 400;
+    audienceIconSize = 50 * cnvW / 400;
 
     //Input
     input8 = createInput();
@@ -199,11 +207,8 @@ function setup() {
     input36.style('border-color', 'white');
     input36.style('display', 'none');
 
-    //Shapes
-    for(let i=0; i<100; i++) {
-        shapes[i] = floor(random(3));
-        audienceClick[i] = false;
-    }
+    //Icons
+    audienceIcon = loadImage('assets/people.png');
 
     //Socket.io
     socket = io.connect(serverURL);
@@ -214,6 +219,8 @@ function setup() {
     });
 
     socket.on('mode', function(data) {
+
+        startTime = millis();
 
       input8.style('display', 'none');
       input27.style('display', 'none');
@@ -234,6 +241,7 @@ function setup() {
     });
 
     socket.on('nextStatement', function(data) {
+        startTime = millis();
         statementClicked = false;
         statementCount++;
         // if(statementCount >= statement.length-1) {
@@ -241,9 +249,13 @@ function setup() {
         // }
     });
 
-    socket.on('someoneClicked', function(data) {
-        audienceClick[data] = true;
-        console.log("client index: " + data);
+    // socket.on('someoneClicked', function(data) {
+    //     audienceClick[data] = true;
+    //     console.log("client index: " + data);
+    // });
+
+    socket.on('duration', function(data) {
+        duration = data;
     });
 
  //   socket.emit('checkNumClients', 1);
@@ -254,7 +266,7 @@ function setup() {
 //--------------------------------------------------------------------
 function draw() {
 
-    // let time = millis();
+    time = millis();
     // if((time-startTime) < 10000) {
     //     socket.emit('checkNumClients', 1); 
     //     console.log("checking num client...");
@@ -304,6 +316,16 @@ function draw() {
     if (mode==14) buttonStatement(question14, statement14);
     if (mode==15) drawChoice(question15, options15);
     if (mode==18) buttonStatement(question18, statement18);
+
+   if (mode ==20) {
+    textAlign(CENTER, CENTER);
+    fill(color(255));
+    textFont(futuraBook);
+    textSize(fontSize20);
+    text("She seems ok on her own, let's give her some space", 40, height/4, width-80, height/2);
+    
+   }
+
     if (mode==21) drawChoice(question21, options21);
     if (mode==24) drawList(question24, options24, 1, options24.length+1);
     if (mode==26) buttonStatement(question26, statement26);
@@ -314,7 +336,25 @@ function draw() {
     if (mode==36) drawInput(question36, input36);
     //pop();
 
+    if(mode!=0 && mode < 37) {
+        if (!statementClicked && !resultSent) {
+            progressBar();
+        }
+    }
+
+    if(mode > 50) {
+        textAlign(CENTER, TOP);
+        fill(color(255));
+        textFont(futuraBold);
+        textSize(fontSize20);
+        text("Want to continue the conversation after the show? Get in touch!", 40, height/4, width-80, height/4);
     
+        socialLinks('instagram', height/2*0.75, 'https://www.instagram.com/demzou_art/');
+        socialLinks('twitter', height/2, 'https://twitter.com/clemencedebaig');
+        socialLinks('facebook', height/2*1.25, 'https://www.facebook.com/demzouart/');
+        socialLinks('website', height/2*1.5, 'http://www.clemencedebaig.com/');
+    }
+
 }
 
 
@@ -340,7 +380,8 @@ function drawChoice(_question, _options) {
         choiceMade = false;
     }
 
-    textAlign(CENTER, CENTER);
+    push();
+    textAlign(CENTER, TOP);
 
     //Question
     fill(questionCol);
@@ -352,6 +393,7 @@ function drawChoice(_question, _options) {
     buttonSquare(_options, 0);
     buttonSquare(_options, 1);
     if(!resultSent) submitButton('selection', _options);
+    pop();
 
 }
 
@@ -405,6 +447,7 @@ function buttonSquare(_options, _optionNum) {
     fill(optionsBgCol[_optionNum]);
     rect(startX, startY, buttonWidth, buttonHeight);
 
+    textAlign(CENTER, CENTER);
     textFont(futuraBook);
     textSize(fontSize24);
     fill(optionsCol[_optionNum]);
@@ -596,9 +639,18 @@ function submitButton(_type, _optionsOrInput) {
                             choice.length = 0;
                             choice = _optionsOrInput.value();
                             console.log(choice);
-                            if(mode ==8) socket.emit('input8', choice);
-                            if(mode ==27) socket.emit('input27', choice);
-                            if(mode ==36) socket.emit('input36', choice);
+                            if(mode ==8) {
+                                socket.emit('input8', choice);
+                                input8.attribute('disabled', '');
+                            }  
+                            if(mode ==27) {
+                                socket.emit('input27', choice);
+                                input27.attribute('disabled', '');
+                            }
+                            if(mode ==36) {
+                                socket.emit('input36', choice);
+                                input36.attribute('disabled', '');
+                            }
                             resultSent = true;
                             choice = [];
 
@@ -633,6 +685,7 @@ function submitButton(_type, _optionsOrInput) {
     rect(startX, startY, buttonWidth, buttonHeight);
     pop();
     push();
+    textAlign(CENTER, CENTER);
     textFont(futuraBook);
     textSize(fontSize20);
     fill(buttonMainCol);
@@ -649,7 +702,7 @@ function buttonStatement(_question, _statement) {
         questionCol = color(255);
     }
 
-    let buttonSize = height/2-60;
+    let buttonSize = width-60;
     let centreX = width/2;
     let centreY = height/5*3;
     let isHovered = false;
@@ -720,27 +773,88 @@ function buttonStatement(_question, _statement) {
 function drawAudience() {
 
     push();
-    let size = 11;
-    let space = 4;
-    translate((cnvW-(size+space)*numPeople)/2, 40);
-    for(let i=0; i<numPeople; i++) {
-        push();
-        if(audienceClick[i]===true) {
-            fill(0, 255, 255);
-        } else {
-            fill(255);
-        }
-        translate(i*(size+space), 0);
-        if(shapes[i]== 0) circle(0, 0, size);
-        if(shapes[i]== 1) rect(-size/2, -size/2, size, size);
-        if(shapes[i]== 2) triangle(0, -size/2, -size/2, size/2, size/2, size/2);
-        pop();
-    }
-    clickedId = 400;
+    translate(width/2-audienceIconSize/2, 0);
+
+    image(audienceIcon, 0, 20, audienceIconSize, audienceIconSize);
+
+    textAlign(LEFT, CENTER);
+    fill(color(255));
+    textFont(futuraBook);
+    textSize(fontSize14);
+    text(numPeople, audienceIconSize, 20, audienceIconSize, audienceIconSize);
+    pop();
+}
+
+//--------------------------------------------------------------------
+function progressBar() {
+
+    push();
+
+    let startX = 18;
+    let startY = height-height/8-20;
+    let barWidth = width-36;
+    let barHeight = 10;
+    let progressWidth = map(time-startTime, 0, duration, barWidth, 0, true);
+    fill(color(30));
+    rect(startX, startY, barWidth, barHeight);
+    fill(color(0, 255, 255));
+    rect(startX, startY, progressWidth, barHeight);
+
     pop();
 
-  }
+}
 
+//--------------------------------------------------------------------
+function socialLinks(_buttonText, _locY, _URL) {
+
+    let buttonWidth;
+    if (width > 1000) {
+        buttonWidth = 600;
+    } else {
+        buttonWidth = width-40;
+    }
+    let buttonHeight = height/10;
+    let startX = (width-buttonWidth)/2;
+    let startY = _locY;
+
+    let buttonBgCol = color(0);
+    let buttonMainCol = color(0);
+
+    //Check hover and clicks
+        if(mouseX > startX && mouseX < startX+buttonWidth) {
+            if(mouseY > startY && mouseY < startY+buttonHeight) {
+                if(mouseIsPressed) {    
+                    buttonBgCol = color(0, 255, 255);
+                    buttonMainCol = color(0);
+                    window.open(_URL, "_blank");
+                } else {
+                    buttonBgCol = color(255);
+                    buttonMainCol = color(0);
+                }
+            } else {
+                buttonBgCol = color(0);
+                buttonMainCol = color(255);
+            }
+        } else {
+            buttonBgCol = color(0);
+            buttonMainCol = color(255);
+        }
+
+    //Draw button
+    push();
+    stroke(buttonMainCol);
+    strokeWeight(2);
+    fill(buttonBgCol)
+    rect(startX, startY, buttonWidth, buttonHeight);
+    pop();
+    push();
+    textAlign(CENTER, CENTER);
+    textFont(futuraBook);
+    textSize(fontSize20);
+    fill(buttonMainCol);
+    text(_buttonText, startX, startY+buttonHeight/4, buttonWidth, buttonHeight/2);
+    pop();
+}
 
 
 //--------------------------------------------------------------------

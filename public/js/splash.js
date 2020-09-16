@@ -122,8 +122,12 @@ function button(_buttonText, _locY, _URL) {
     //Draw button
     push();
     stroke(buttonMainCol);
+    strokeWeight(2);
     fill(buttonBgCol)
     rect(startX, startY, buttonWidth, buttonHeight);
+    pop();
+    push();
+    textAlign(CENTER, CENTER);
     textFont(futuraBook);
     textSize(fontSize20);
     fill(buttonMainCol);

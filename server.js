@@ -128,9 +128,10 @@ io.sockets.on('connection',
   // Callback function to call whenever a socket connection is made
   function (socket) {
     // Print message to the console indicating that a new client has connected
-    console.log("We have a new client: " + socket.id);
+    console.log("New client: " + socket.id);
     addClient(socket.id);
     socket.broadcast.emit('numClients', clientList.length);
+    io.to(socket.id).emit('numClients', clientList.length);
     io.to(socket.id).emit('mode', mode);
 
     //Max handshake
@@ -165,6 +166,7 @@ io.sockets.on('connection',
         mode = data;
         console.log("mode :" + data);
         socket.broadcast.emit('mode', data);
+        socket.broadcast.emit('numClients', clientList.length);
       }
     );
 
@@ -265,21 +267,27 @@ io.sockets.on('connection',
     }
   );
 
-  socket.on('interacting',
+  socket.on('duration',
   function(data) {
-    console.log(socket.id + " has clicked");
-
-    if (clientList.length > 0) {
-      for (let i= 0; i < clientList.length; i++) {
-        if (clientList[i] === socket.id) {
-          socket.broadcast.emit('someoneClicked', i);
-          console.log("client index: " + i);
-        }
-      }
-    }
-      socket.broadcast.emit('numClients', clientList.length);
+      socket.broadcast.emit('duration', data);
     }
   );
+
+  // socket.on('interacting',
+  // function(data) {
+  //   console.log(socket.id + " has clicked");
+
+  //   if (clientList.length > 0) {
+  //     for (let i= 0; i < clientList.length; i++) {
+  //       if (clientList[i] === socket.id) {
+  //         socket.broadcast.emit('someoneClicked', i);
+  //         console.log("client index: " + i);
+  //       }
+  //     }
+  //   }
+  //     socket.broadcast.emit('numClients', clientList.length);
+  //   }
+  // );
 
     
     // Specify a callback function to run when the client disconnects
